@@ -1,6 +1,34 @@
 import { load as f_o_env } from "https://deno.land/std@0.221.0/dotenv/mod.ts";
 let o_env = await f_o_env();
 
+let a_o = [];
+let n = 1;
+let b_more = true;
+let n_per_page_max = 100;
+while(b_more){
+
+    let o1 = await fetch(`https://api.github.com/user/repos?page=${n}&per_page=${n_per_page_max}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `token ${o_env.s_token_api}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+    });
+    let a_o2 = await (o1.json())
+    a_o = [
+        ...a_o,
+        ...a_o2 
+    ]
+    b_more = a_o2.length == n_per_page_max
+    n+=1
+}
+
+let a_s_repo_nonforked = a_o
+                            .filter(o=>!o.fork)
+                            .map(o=>o.name);
+// console.log(a_s_repo_nonforked.length)
+// Deno.exit()
+
 function f_s_b64_from_s_utf(str) {
     return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, 
         function(match, p1) {
@@ -37,117 +65,9 @@ let s_name_file = "LICENSE"
 //     }
 // }
 //Array.from(document.querySelectorAll('a')).filter(o=>o.getAttribute('itemprop')?.includes('codeRepository')).map(o=>o.innerText)
-let a_s_repo = [
-    "strapi_backup",
-    "music-lessons",
-    "deutsch",
-    "gameengine",
-    // "kuschbook1",
-    "yugioh_strapi_consumer",
-    "klara_ipa",
-    "python_dualsense",
-    // "pydualsense",
-    // "DualSenseSupport",
-    // "dualsense",
-    // "ArduinoTutorials",
-    "uriobject",
-    "UrlParts",
-    "randomInts",
-    "jsanimation",
-    "sound_science",
-    "cameracontrol",
-    "denojs_jsondb",
-    "ledlightlayouter",
-    "O_binary_string",
-    "f_evaluate_object",
-    "instant_messenger",
-    "lieber_bewusst_sein_consumer",
-    "lieber_bewusst_sein_documentations",
-    "js_code",
-    "kotlin_intellij_stuff",
-    "kotlin_code",
-    "go_code",
-    "rust_code_old",
-    "sqlite_tutorial",
-    "npm_js_modules",
-    "pyqt5-reactive-gui",
-    "betriebspraktikum_2022",
-    "threejs_projects",
-    "marinas_kunst_gallerie",
-    "coding_tutorials",
-    "web_stuff",
-    "visualisierung_deutsch_vortrag",
-    "polynoms_base",
-    "bfh_java_kotlin",
-    "ascii",
-    "networking_stuff",
-    "hubbleharvest_windowsclient",
-    "strapi-test-aja-soft-sqlite",
-    "hubbleharvest",
-    "imgae_compare_app",
-    "denojs_f_o__casted_to_class",
-    "phonetic",
-    "custom_machine_code",
-    "hubbleharvest_electron_consumer",
-    "c_code",
-    "ti_nspire_python_stuff",
-    "denojs_code",
-    "vuejs_template",
-    "python_code",
-    "rust_code",
-    "keybindings_linux_and_windows",
-    "c_sharp_dotnet_linux_messenger_app",
-    "strapi_auto_generate_models",
-    "let_me_van_de_paar_that_for_you",
-    "rust_dualsense",
-    "deno_stable_diffusion_autogenerate_stuff",
-    "assembler_projects",
-    "ocr_image_parts",
-    "O_json_to_css",
-    "strapi_golog_instantmessenger",
-    "golog_doucmentations",
-    "denojs_O_json_db",
-    "deno_module_playground",
-    "deno_o_path",
-    "strapi_golog_consumer",
-    "strapi_golog",
-    "O_path_file",
-    "docker_strapi_postgresql",
-    "strapi_test",
-    "docker_basics",
-    "node_command",
-    "linklist",
-    "O_webserver",
-    "deno_rust_midi",
-    "statistics",
-    "date_functions",
-    "code_autoextender",
-    "fitsfiddler",
-    "o_file__fits",
-    "label_layouter",
-    "denojs_O_command",
-    "web_datepicker",
-    "o_file__wav",
-    "O_wav_file",
-    "qoi_file",
-    "browser_notifier",
-    "motorized_microscope",
-    "fresh-fresh",
-    "arduino",
-    "O_url",
-    "denojs_f_s_html_syntax_highlighted",
-    "side_slider",
-    "stellarium_gornergrat_betriebspraktikum_2023_imagemanipulation",
-    "denojs_O_number_normalized",
-    "denojs_math_constants",
-    "javascript_basics",
-    "hextovec3",
-    "denojs_crudcracker",
-    "js_minimal_gui",
-    "denojs_f_a_o_missing_prop"
-]
+
 for(
-    let s_name_repo of a_s_repo
+    let s_name_repo of a_s_repo_nonforked
     // .slice(0,1)
     ){
 
