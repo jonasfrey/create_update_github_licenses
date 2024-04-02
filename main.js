@@ -36,6 +36,7 @@ let s_name_file = "LICENSE"
 //         this.s_ymd_archive = s_ymd_archive
 //     }
 // }
+//Array.from(document.querySelectorAll('a')).filter(o=>o.getAttribute('itemprop')?.includes('codeRepository')).map(o=>o.innerText)
 let a_s_repo = [
     "strapi_backup",
     "music-lessons",
